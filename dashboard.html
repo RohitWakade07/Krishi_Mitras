@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Krishi-Kavach | Dashboard</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="top-nav">
+      <div class="brand">Krishi-Kavach</div>
+      <button class="nav-toggle" aria-label="Open Menu" id="navToggle">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="dashboard.html" aria-current="page">Dashboard</a></li>
+        <li><a href="advisory.html">Advisory & Voice</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="grid">
+      <section class="panel" id="locationPanel">
+        <h2>Your Location</h2>
+        <p id="locationStatus">Detecting location…</p>
+      </section>
+
+      <section class="panel">
+        <h2>Weather (Next 24h)</h2>
+        <dl class="kv" id="weatherKv"></dl>
+      </section>
+
+      <section class="panel">
+        <h2>Irrigation & Fertilizer Tips</h2>
+        <ul id="advisoryList"></ul>
+      </section>
+
+      <section class="panel">
+        <h2>Pest/Disease Risk</h2>
+        <p id="pestRisk">Computing…</p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <small>© <span id="year"></span> Krishi-Kavach</small>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+  <script src="services/weatherService.js"></script>
+  <script src="services/advisoryEngine.js"></script>
+  <script src="services/pestModule.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    async function init() {
+      const locationStatus = document.getElementById('locationStatus');
+      const weatherKv = document.getElementById('weatherKv');
+      const advisoryList = document.getElementById('advisoryList');
+      const pestRisk = document.getElementById('pestRisk');
+
+      try {
+        const pos = await WeatherService.getLocation();
+        locationStatus.textContent = `Lat ${pos.latitude.toFixed(3)}, Lon ${pos.longitude.toFixed(3)}`;
+        const weather = await WeatherService.fetchWeather(pos);
+
+        const summary = WeatherService.summarize(weather);
+        const kv = [
+          ['Temperature (°C)', summary.temperature.toFixed(1)],
+          ['Humidity (%)', summary.humidity?.toFixed(0) ?? '—'],
+          ['Rain (mm)', summary.rain?.toFixed(1) ?? '0'],
+          ['Wind (km/h)', summary.wind?.toFixed(1) ?? '—']
+        ];
+        weatherKv.innerHTML = kv.map(([k,v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('');
+
+        const tips = AdvisoryEngine.generateTips({
+          soilMoistureNd: summary.soilMoistureIndex,
+          rainfallMm: summary.rain || 0,
+          temperatureC: summary.temperature,
+          humidityPct: summary.humidity || 50
+        });
+        advisoryList.innerHTML = tips.map(t => `<li>${t}</li>`).join('');
+
+        const risk = PestModule.estimateRisk({
+          temperatureC: summary.temperature,
+          humidityPct: summary.humidity || 50,
+          rainMm: summary.rain || 0
+        });
+        pestRisk.textContent = `${risk.level} risk${risk.note ? ` – ${risk.note}` : ''}`;
+      } catch (e) {
+        locationStatus.textContent = 'Location permission denied — using default (Pune).';
+        const pos = { latitude: 18.5204, longitude: 73.8567 };
+        const weather = await WeatherService.fetchWeather(pos);
+        const summary = WeatherService.summarize(weather);
+        const kv = [
+          ['Temperature (°C)', summary.temperature.toFixed(1)],
+          ['Humidity (%)', summary.humidity?.toFixed(0) ?? '—'],
+          ['Rain (mm)', summary.rain?.toFixed(1) ?? '0'],
+          ['Wind (km/h)', summary.wind?.toFixed(1) ?? '—']
+        ];
+        weatherKv.innerHTML = kv.map(([k,v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('');
+      }
+    }
+    init();
+  </script>
+</body>
+</html>
+
+

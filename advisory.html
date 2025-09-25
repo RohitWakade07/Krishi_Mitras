@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Krishi-Kavach | Advisory & Voice</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="top-nav">
+      <div class="brand">Krishi-Kavach</div>
+      <button class="nav-toggle" aria-label="Open Menu" id="navToggle">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="advisory.html" aria-current="page">Advisory & Voice</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="panel">
+      <h2>Ask the Voice-Bot</h2>
+      <div class="voice-controls">
+        <button id="startRec" class="primary">🎙️ Speak</button>
+        <button id="stopRec">⏹️ Stop</button>
+      </div>
+      <p id="transcript">Tap Speak and ask in Hindi/Marathi (e.g., "kal baarish hogi?")</p>
+      <label for="response">Bot Response</label>
+      <textarea id="response" rows="4" placeholder="Response will appear here"></textarea>
+      <button id="speakOut">🔊 Play Response</button>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <small>© <span id="year"></span> Krishi-Kavach</small>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+  <script src="services/voiceBot.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    VoiceBot.init({
+      transcriptEl: document.getElementById('transcript'),
+      responseEl: document.getElementById('response'),
+      startBtn: document.getElementById('startRec'),
+      stopBtn: document.getElementById('stopRec'),
+      speakBtn: document.getElementById('speakOut')
+    });
+  </script>
+</body>
+</html>
+
+

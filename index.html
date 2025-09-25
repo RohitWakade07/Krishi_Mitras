@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Krishi-Kavach | Home</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <meta name="theme-color" content="#1b5e20">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="top-nav">
+      <div class="brand">Krishi-Kavach</div>
+      <button class="nav-toggle" aria-label="Open Menu" id="navToggle">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" aria-current="page">Home</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="advisory.html">Advisory & Voice</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Krishi-Kavach: Shielding Indian Agriculture</h1>
+      <p class="tagline">A mobile-first digital guardian for smallholder farmers.</p>
+      <a class="btn primary" href="dashboard.html">Open Dashboard</a>
+    </section>
+
+    <section class="features">
+      <h2>What you can use today</h2>
+      <div class="cards">
+        <article class="card">
+          <h3>Hyperlocal Weather</h3>
+          <p>Fetches weather using your location to power farm advisories.</p>
+        </article>
+        <article class="card">
+          <h3>Irrigation & Fertilizer Tips</h3>
+          <p>Simple, data-driven suggestions for when and how much to apply.</p>
+        </article>
+        <article class="card">
+          <h3>Pest Risk Signal</h3>
+          <p>Basic pest/disease heuristic from temperature and humidity.</p>
+        </article>
+        <article class="card">
+          <h3>Vernacular Voice-Bot</h3>
+          <p>Ask questions in Hindi/Marathi; get spoken responses.</p>
+        </article>
+        <article class="card">
+          <h3>Offline-First</h3>
+          <p>Works with low connectivity via smart caching.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="mission">
+      <h2>Aligned with National Missions</h2>
+      <ul class="bullets">
+        <li><strong>Digital India</strong>: Data-driven farmer services</li>
+        <li><strong>SDG 2: Zero Hunger</strong>: Improved food security</li>
+        <li><strong>Atmanirbhar Bharat</strong>: Domestic agri-tech for resilient livelihoods</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <small>© <span id="year"></span> Krishi-Kavach</small>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
+
+
