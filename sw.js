@@ -1,16 +1,16 @@
 const CACHE_NAME = 'krishi-kavach-v1';
 const APP_SHELL = [
-  '/',
-  '/Krishi_Mitras/index.html',
-  '/Krishi_Mitras/dashboard.html',
-  '/Krishi_Mitras/advisory.html',
-  '/Krishi_Mitras/assets/css/styles.css',
-  '/Krishi_Mitras/assets/js/main.js',
-  '/Krishi_Mitras/services/weatherService.js',
-  '/Krishi_Mitras/services/advisoryEngine.js',
-  '/Krishi_Mitras/services/pestModule.js',
-  '/Krishi_Mitras/services/voiceBot.js',
-  '/Krishi_Mitras/manifest.json'
+  'index.html',
+  'dashboard.html',
+  'advisory.html',
+  'assets/css/styles.css',
+  'assets/js/main.js',
+  'services/weatherService.js',
+  'services/advisoryEngine.js',
+  'services/pestModule.js',
+  'services/voiceBot.js',
+  'manifest.json',
+  'assets/images/favicon.svg'
 ];
 
 self.addEventListener('install', (event) => {

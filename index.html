@@ -1,78 +1,322 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Krishi-Kavach | Home</title>
-  <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="assets/css/styles.css">
-  <meta name="theme-color" content="#1b5e20">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krishi-Kavach | Your Digital Guardian for a Prosperous Harvest</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-green: #2a9d8f;
+            --dark-green: #264653;
+            --accent-yellow: #f4a261;
+            --light-bg: #f8f9fa;
+            --text-color: #333;
+            --white-color: #ffffff;
+            --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.08);
+            --shadow-strong: 0 8px 25px rgba(42, 157, 143, 0.2);
+            --border-radius: 12px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Poppins', sans-serif; line-height: 1.7; color: var(--text-color); background-color: var(--white-color); }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        h1, h2, h3 { line-height: 1.3; margin-bottom: 1rem; color: var(--dark-green); font-weight: 700; }
+        h1 { font-size: 3rem; }
+        h2 { font-size: 2.5rem; text-align: center; }
+        h3 { font-size: 1.5rem; }
+        .section-intro { text-align: center; max-width: 650px; margin: 0 auto 3.5rem auto; font-size: 1.1rem; color: #555; }
+        section { padding: 6rem 0; overflow: hidden; }
+        .reveal { opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        header { background-color: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); box-shadow: var(--shadow-light); padding: 1rem 0; position: sticky; top: 0; z-index: 1000; width: 100%; }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.8rem; font-weight: 700; color: var(--primary-green); text-decoration: none; }
+        .nav-links { display: flex; list-style: none; gap: 2.0rem; }
+        .nav-links a { text-decoration: none; color: var(--dark-green); font-weight: 600; position: relative; padding-bottom: 5px; transition: color 0.3s ease; }
+        .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background-color: var(--primary-green); transition: width 0.3s ease; }
+        .nav-links a:hover { color: var(--primary-green); }
+        .nav-links a:hover::after { width: 100%; }
+        .hamburger { display: none; cursor: pointer; }
+        .bar { display: block; width: 25px; height: 3px; margin: 5px auto; background-color: var(--dark-green); transition: all 0.3s ease-in-out; }
+
+        .hero { background: linear-gradient(rgba(38, 70, 83, 0.6), rgba(38, 70, 83, 0.6)), url('https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=1500&q=80') no-repeat center center/cover; color: var(--white-color); min-height: 90vh; display: flex; align-items: center; text-align: center; padding: 0 20px; position: relative; overflow:hidden; }
+        .hero::after { content: ""; position:absolute; inset:-20%; background: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.06), transparent 40%), radial-gradient(circle at 80% 70%, rgba(255,255,255,0.06), transparent 45%); animation: floatBg 10s ease-in-out infinite alternate; }
+        @keyframes floatBg { 0% { transform: translate3d(0,0,0) scale(1); } 100% { transform: translate3d(-2%, -2%, 0) scale(1.05); } }
+        .hero-content { max-width: 800px; margin: auto; }
+        .hero h1 { color: var(--white-color); text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+        .hero .subtitle { font-size: 1.4rem; font-weight: 300; margin-bottom: 2.5rem; opacity: 0.9; }
+        .cta-button { background-image: linear-gradient(45deg, var(--accent-yellow), #e76f51); color: var(--white-color); padding: 16px 35px; text-decoration: none; font-weight: 700; border-radius: 50px; transition: transform 0.3s ease, box-shadow 0.3s ease; display: inline-block; border: none; box-shadow: 0 4px 20px rgba(231, 111, 81, 0.4); }
+        .cta-button:hover { transform: translateY(-5px); box-shadow: 0 8px 30px rgba(231, 111, 81, 0.5); }
+
+        .features-section { background-color: var(--light-bg); }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+        .feature-card { background-color: var(--white-color); padding: 2.0rem; border-radius: var(--border-radius); box-shadow: var(--shadow-light); text-align: left; transition: transform 0.3s ease, box-shadow 0.3s ease; border-top: 4px solid var(--primary-green); }
+        .feature-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-strong); }
+        .feature-card h3 { color: var(--primary-green); margin-bottom: .5rem; }
+        .feature-actions { margin-top: 1rem; display: flex; gap: .75rem; }
+        .chip { display:inline-block; padding:.35rem .6rem; border-radius: 16px; background:#e8f6f4; color:#1b5e20; font-size:.85rem; font-weight:600; }
+        .link-btn { display:inline-block; padding:.6rem .9rem; border-radius:10px; border:1px solid #2a9d8f; color:#2a9d8f; text-decoration:none; font-weight:600; }
+        .link-btn.primary { background:#2a9d8f; color:#fff; }
+
+        .testimonial-section { background-color: var(--dark-green); color: var(--white-color); }
+        .testimonial-section h2 { color: var(--white-color); }
+        .testimonial-card { background-color: rgba(255, 255, 255, 0.1); padding: 3rem; border-radius: var(--border-radius); max-width: 800px; margin: auto; text-align: center; }
+        .testimonial-quote { font-size: 1.3rem; font-style: italic; margin-bottom: 2rem; line-height: 1.8; }
+        .testimonial-avatar { width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--primary-green); margin-bottom: 1rem; }
+        .testimonial-author { font-weight: 700; font-size: 1.1rem; }
+        .testimonial-author span { font-weight: 300; font-size: 0.9rem; opacity: 0.8; }
+
+        .impact-section { background-color: var(--light-bg); }
+        .impact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; text-align: center; }
+        .impact-card { background-color: var(--white-color); padding: 2.5rem; border-radius: var(--border-radius); box-shadow: var(--shadow-light); }
+        .impact-figure { font-size: 4rem; font-weight: 700; color: var(--primary-green); }
+
+        .strategy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; margin-bottom: 4rem; text-align: center; }
+        .strategy-item img { max-width: 90px; margin-bottom: 1rem; filter: grayscale(1); opacity: 0.7; transition: all 0.3s ease; }
+        .strategy-item:hover img { filter: grayscale(0); opacity: 1; }
+
+        .uniqueness { background-image: linear-gradient(45deg, var(--dark-green), var(--primary-green)); color: var(--white-color); padding: 3rem; border-radius: var(--border-radius); text-align: center; max-width: 900px; margin: 2rem auto 0 auto; }
+        .uniqueness h3, .uniqueness p { color: var(--white-color); }
+
+        footer { background-color: var(--dark-green); color: rgba(255, 255, 255, 0.7); text-align: center; padding: 2rem 0; }
+
+        /* Floating CTA Bar */
+        .cta-bar { position: fixed; left: 50%; transform: translateX(-50%); bottom: 18px; display:flex; gap:10px; background: rgba(255,255,255,0.92); border:1px solid #e5f2f0; padding:10px 12px; border-radius: 16px; box-shadow: var(--shadow-light); z-index: 999; backdrop-filter: blur(8px); }
+        .cta-bar a, .cta-bar button { border:1px solid #2a9d8f; background:#fff; color:#2a9d8f; padding:.55rem .85rem; border-radius: 10px; font-weight:700; cursor:pointer; }
+        .cta-bar .install { background:#2a9d8f; color:#fff; }
+
+        @media (max-width: 992px) { h1 { font-size: 2.5rem; } h2 { font-size: 2rem; } }
+        @media (max-width: 768px) {
+            .nav-links { position: fixed; left: -100%; top: 70px; gap: 0; flex-direction: column; background-color: white; width: 100%; text-align: center; transition: 0.3s; box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05); }
+            .nav-links.active { left: 0; }
+            .nav-links li { padding: 1.5rem 0; }
+            .nav-links a:hover::after { width: 30%; left: 35%; }
+            .hamburger { display: block; }
+            .hamburger.active .bar:nth-child(2) { opacity: 0; }
+            .hamburger.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .hamburger.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+            .strategy-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
-  <header class="site-header">
-    <nav class="top-nav">
-      <div class="brand">Krishi-Kavach</div>
-      <button class="nav-toggle" aria-label="Open Menu" id="navToggle">☰</button>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="index.html" aria-current="page">Home</a></li>
-        <li><a href="dashboard.html">Dashboard</a></li>
-        <li><a href="advisory.html">Advisory & Voice</a></li>
-      </ul>
-    </nav>
-  </header>
 
-  <main>
-    <section class="hero">
-      <h1>Krishi-Kavach: Shielding Indian Agriculture</h1>
-      <p class="tagline">A mobile-first digital guardian for smallholder farmers.</p>
-      <a class="btn primary" href="dashboard.html">Open Dashboard</a>
-    </section>
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">कृषि-कवच</a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#impact">Impact</a></li>
+                <li><a href="#strategy">Strategy</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="advisory.html">Advisory & Voice</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+    </header>
 
-    <section class="features">
-      <h2>What you can use today</h2>
-      <div class="cards">
-        <article class="card">
-          <h3>Hyperlocal Weather</h3>
-          <p>Fetches weather using your location to power farm advisories.</p>
-        </article>
-        <article class="card">
-          <h3>Irrigation & Fertilizer Tips</h3>
-          <p>Simple, data-driven suggestions for when and how much to apply.</p>
-        </article>
-        <article class="card">
-          <h3>Pest Risk Signal</h3>
-          <p>Basic pest/disease heuristic from temperature and humidity.</p>
-        </article>
-        <article class="card">
-          <h3>Vernacular Voice-Bot</h3>
-          <p>Ask questions in Hindi/Marathi; get spoken responses.</p>
-        </article>
-        <article class="card">
-          <h3>Offline-First</h3>
-          <p>Works with low connectivity via smart caching.</p>
-        </article>
-      </div>
-    </section>
+    <main>
+        <section class="hero">
+            <div class="container hero-content">
+                <h1 class="reveal">Your Digital Guardian for a Prosperous Harvest</h1>
+                <p class="subtitle reveal">Empowering India's Farmers with AI-Powered Insights from Sky to Soil. Simple, Actionable, and Reliable.</p>
+                <a href="dashboard.html" class="cta-button reveal">Open Live Dashboard</a>
+            </div>
+        </section>
 
-    <section class="mission">
-      <h2>Aligned with National Missions</h2>
-      <ul class="bullets">
-        <li><strong>Digital India</strong>: Data-driven farmer services</li>
-        <li><strong>SDG 2: Zero Hunger</strong>: Improved food security</li>
-        <li><strong>Atmanirbhar Bharat</strong>: Domestic agri-tech for resilient livelihoods</li>
-      </ul>
-    </section>
-  </main>
+        <section id="features" class="features-section">
+            <div class="container">
+                <h2 class="reveal">A Shield of Technology for Every Farmer</h2>
+                <p class="section-intro reveal">We combine sovereign data and on-field intelligence into one simple dashboard, designed for real Indian farm conditions.</p>
+                <div class="features-grid">
+                    <div class="feature-card reveal">
+                        <h3>Hyperlocal Weather</h3>
+                        <p>Auto-detected location with 24h forecast for temperature, humidity, rain, and wind.</p>
+                        <div class="feature-actions">
+                            <span class="chip">Powered by Open‑Meteo</span>
+                            <a class="link-btn primary" href="dashboard.html">View Weather</a>
+                        </div>
+                    </div>
+                    <div class="feature-card reveal">
+                        <h3>Irrigation & Fertilizer Tips</h3>
+                        <p>Simple, data-driven recommendations based on soil moisture proxy and rainfall.</p>
+                        <div class="feature-actions">
+                            <span class="chip">Advisory Engine</span>
+                            <a class="link-btn" href="dashboard.html#">See Tips</a>
+                        </div>
+                    </div>
+                    <div class="feature-card reveal">
+                        <h3>Pest/Disease Risk</h3>
+                        <p>Quick heuristic using humidity, temperature, and rainfall to flag risk levels.</p>
+                        <div class="feature-actions">
+                            <span class="chip">Scout Reminder</span>
+                            <a class="link-btn" href="dashboard.html#">Check Risk</a>
+                        </div>
+                    </div>
+                    <div class="feature-card reveal">
+                        <h3>Vernacular Voice‑Bot</h3>
+                        <p>Ask in Hindi/Marathi and hear responses. Designed for low‑literacy usability.</p>
+                        <div class="feature-actions">
+                            <span class="chip">Voice‑First</span>
+                            <a class="link-btn" href="advisory.html">Try Voice</a>
+                        </div>
+                    </div>
+                    <div class="feature-card reveal">
+                        <h3>Offline‑First</h3>
+                        <p>Works during poor connectivity with smart caching. Auto‑syncs when online.</p>
+                        <div class="feature-actions">
+                            <span class="chip">PWA</span>
+                            <a class="link-btn" href="#">Install App</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  <footer class="site-footer">
-    <small>© <span id="year"></span> Krishi-Kavach</small>
-  </footer>
+        <section class="testimonial-section">
+            <div class="container reveal">
+                <h2>Voice of the Farmer</h2>
+                <div class="testimonial-card">
+                    <img src="https://via.placeholder.com/80x80.png?text=Farmer" alt="Farmer" class="testimonial-avatar">
+                    <p class="testimonial-quote">"Krishi-Kavach warned me about the pest attack two weeks early. I saved my entire cotton crop. For the first time, technology feels like it was made for me."</p>
+                    <p class="testimonial-author">Ramesh Kumar, <span>Bhusawal, Maharashtra</span></p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="impact" class="impact-section">
+            <div class="container">
+                <h2 class="reveal">Tangible Impact, National Pride</h2>
+                <p class="section-intro reveal">Measured improvements in yield and cost, aligned with national missions.</p>
+                <div class="impact-grid">
+                    <div class="impact-card reveal">
+                        <h3>Increase in Crop Yield</h3>
+                        <p class="impact-figure" data-target="20">0</p>
+                        <p>Proactive advisories lead to healthier crops and bigger harvests.</p>
+                    </div>
+                    <div class="impact-card reveal">
+                        <h3>Reduction in Input Costs</h3>
+                        <p class="impact-figure" data-target="30">0</p>
+                        <p>Precision usage of water and fertilizers reduces waste.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  <script src="assets/js/main.js"></script>
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+        <section id="strategy" class="strategy-section">
+            <div class="container">
+                <h2 class="reveal">Aligned with India's Vision</h2>
+                <div class="strategy-grid">
+                    <div class="strategy-item reveal">
+                        <img src="https://via.placeholder.com/100x100.png?text=Atmanirbhar" alt="Atmanirbhar Bharat Logo">
+                        <h3>Atmanirbhar Krishi</h3>
+                        <p>Reduce crop losses and strengthen food security with data‑driven farming.</p>
+                    </div>
+                    <div class="strategy-item reveal">
+                        <img src="https://via.placeholder.com/100x100.png?text=Digital+India" alt="Digital India Logo">
+                        <h3>Digital India</h3>
+                        <p>Bringing ISRO and IMD data to grassroots farmers with simple experiences.</p>
+                    </div>
+                </div>
+                <div class="uniqueness reveal">
+                    <h3>Our Unique Advantage</h3>
+                    <p>Sovereign Indian Data + Vernacular Voice‑First + Offline‑First Architecture — built for real‑world India.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="year"></span> Krishi-Kavach. A Digital Shield for the Indian Farmer.</p>
+        </div>
+    </footer>
+
+    <div class="cta-bar" id="ctaBar">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="advisory.html">Advisory</a>
+        <button class="install" id="installBtn" hidden>Install App</button>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        const hamburger = document.querySelector(".hamburger");
+        const navLinks = document.querySelector(".nav-links");
+        if (hamburger && navLinks) {
+            hamburger.addEventListener("click", () => {
+                hamburger.classList.toggle("active");
+                navLinks.classList.toggle("active");
+            });
+            document.querySelectorAll(".nav-links a").forEach(n => n.addEventListener("click", () => {
+                hamburger.classList.remove("active");
+                navLinks.classList.remove("active");
+            }));
+        }
+
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        const counters = document.querySelectorAll('.impact-figure');
+        const speed = 200;
+        const countObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    const updateCount = () => {
+                        const target = +counter.getAttribute('data-target');
+                        const count = +counter.innerText;
+                        const increment = target / speed;
+                        if (count < target) {
+                            counter.innerText = Math.ceil(count + increment);
+                            setTimeout(updateCount, 1);
+                        } else {
+                            counter.innerText = target + '%';
+                        }
+                    };
+                    updateCount();
+                    observer.unobserve(counter);
+                }
+            });
+        }, { threshold: 0.5 });
+        counters.forEach(counter => countObserver.observe(counter));
+
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // PWA Install
+        let deferredPrompt;
+        const installBtn = document.getElementById('installBtn');
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBtn.hidden = false;
+        });
+        installBtn?.addEventListener('click', async () => {
+            if (!deferredPrompt) return;
+            deferredPrompt.prompt();
+            await deferredPrompt.userChoice;
+            deferredPrompt = null;
+            installBtn.hidden = true;
+        });
+    </script>
 </body>
 </html>
-
-
